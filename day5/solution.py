@@ -1,23 +1,22 @@
-from string import ascii_lowercase
-from itertools import product
+import re
 
 
 def is_nice(s):
-    if (
-        sum(s.count(v) for v in "aeiou") >= 3
-        and any(x * 2 in s for x in ascii_lowercase)
-        and all(x not in s for x in {"ab", "cd", "pq", "xy"})
-    ):
-        return True
-    return False
+    return (
+        True
+        if (
+            re.search(r"([aeiou]\w*){3,}", s)
+            and re.search(r"(\w)\1", s)
+            and not re.search(r"ab|cd|pq|xy", s)
+        )
+        else False
+    )
 
 
 def is_better(s):
-    if any(x + y + x in s for x, y in product(ascii_lowercase, repeat=2)) and any(
-        s[i + 2:].count(s[i:i + 2]) for i in range(len(s) - 3)
-    ):
-        return True
-    return False
+    return (
+        True if (re.search(r"(\w)\w\1", s) and re.search(r"(\w{2}).*\1", s)) else False
+    )
 
 
 with open("data") as f:
