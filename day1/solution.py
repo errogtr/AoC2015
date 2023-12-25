@@ -1,7 +1,12 @@
-with open("data") as f:
+def counts(instructions):
+    return instructions.count("(") - instructions.count(")")
+
+
+with open("day1/data") as f:
     instructions = f.read()
 
 # == PART 1 ==
-print(instructions.count("(") - instructions.count(")"))
+print(counts(instructions))
 
-
+# == PART 2 ==
+print(next(i for i in range(len(instructions)) if counts(instructions[:i]) == -1))
