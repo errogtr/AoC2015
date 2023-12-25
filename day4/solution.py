@@ -1,4 +1,5 @@
 from hashlib import md5
+from itertools import count
 
 
 def hash(s):
@@ -6,12 +7,9 @@ def hash(s):
 
 
 def lowest(key, l):
-    i = 0
-    while True:
+    for i in count():
         if hash(f"{key}{i}").startswith("0" * l):
-            break
-        i += 1
-    return i
+            return i
 
 
 with open("day4/data") as f:
