@@ -13,6 +13,8 @@ with open("data") as f:
     instructions = [parse(line) for line in f.read().splitlines()]
 
 size = 1000
+
+# ==== PART 1 ====
 lights = [0] * size**2
 for action, x, y, u, v in instructions:
     for t, s in product(range(x, u + 1), range(y, v + 1)):
@@ -25,7 +27,8 @@ for action, x, y, u, v in instructions:
                 lights[t + s * size] = 1 - lights[t + s * size]
 print(sum(lights))
 
-size = 1000
+
+# ==== PART 2 ====
 lights = [0] * size**2
 actions = {"turn on": 1, "turn off": -1, "toggle": 2}
 for action, x, y, u, v in instructions:
