@@ -2,21 +2,17 @@ import re
 
 
 def is_nice(s):
-    return (
-        True
-        if (
-            re.search(r"([aeiou]\w*){3,}", s)
-            and re.search(r"(\w)\1", s)
-            and not re.search(r"ab|cd|pq|xy", s)
+    return all(
+        (
+            re.search(r"([aeiou]\w*){3,}", s),
+            re.search(r"(\w)\1", s),
+            not re.search(r"ab|cd|pq|xy", s),
         )
-        else False
     )
 
 
 def is_better(s):
-    return (
-        True if (re.search(r"(\w)\w\1", s) and re.search(r"(\w{2}).*\1", s)) else False
-    )
+    return all((re.search(r"(\w)\w\1", s), re.search(r"(\w{2}).*\1", s)))
 
 
 with open("data") as f:
