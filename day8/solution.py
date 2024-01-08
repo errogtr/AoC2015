@@ -5,4 +5,6 @@ with open("data") as f:
 print(sum(len(s) - len(eval(s)) for s in literals))
 
 # ==== PART 2 ====
-print(sum(2 + len(s.replace("\\", "\\\\").replace("\"", "\\\"")) - len(s) for s in literals))
+print(
+    sum(2 + len(s.replace("\\", "\\\\").replace('"', '\\"')) - len(s) for s in literals)
+)

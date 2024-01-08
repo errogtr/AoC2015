@@ -6,4 +6,4 @@ with open("day2/data") as f:
 print(sum(2 * (l * w + l * h + w * h) + min(l * w, l * h, w * h) for l, w, h in prisms))
 
 # == PART 2 ==
-print(sum(l*w*h + 2 * min(l + w, l + h, w + h) for l, w, h in prisms))
+print(sum(l * w * h + 2 * min(l + w, l + h, w + h) for l, w, h in prisms))
