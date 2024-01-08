@@ -1,18 +1,14 @@
 import re
-from string import ascii_lowercase
-
-num2letter = dict(enumerate(ascii_lowercase))
-letter2num = {c: n for n, c in num2letter.items()}
 
 
-def to_base_26(password):
-    return sum(letter2num[c] * 26 ** i for i, c in enumerate(reversed(password)))
+def from_base_26(password):
+    return sum((ord(c) - 97) * 26 ** i for i, c in enumerate(reversed(password)))
 
 
-def from_base_26(num):
+def to_base_26(num):
     password = ""
     while num:
-        password += num2letter[num % 26]
+        password += chr(num % 26 + 97)
         num //= 26
     return password[::-1]
 
@@ -26,7 +22,7 @@ def validate(password):
 
 
 def increment(password):
-    return from_base_26(to_base_26(password) + 1)
+    return to_base_26(from_base_26(password) + 1)
 
 
 def next_password(password):
