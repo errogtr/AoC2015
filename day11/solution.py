@@ -2,7 +2,7 @@ import re
 
 
 def from_base_26(password):
-    return sum((ord(c) - 97) * 26 ** i for i, c in enumerate(reversed(password)))
+    return sum((ord(c) - 97) * 26**i for i, c in enumerate(reversed(password)))
 
 
 def to_base_26(num):
@@ -14,11 +14,15 @@ def to_base_26(num):
 
 
 def validate(password):
-    return all((
-        re.search(r"abc|bcd|cde|def|efg|fgh|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz", password),
-        re.search(r"[iol]", password) is None,
-        re.search(r"(\w)\1.*(\w)\2", password)
-    ))
+    return all(
+        (
+            re.search(
+                r"abc|bcd|cde|def|efg|fgh|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz", password
+            ),
+            re.search(r"[iol]", password) is None,
+            re.search(r"(\w)\1.*(\w)\2", password),
+        )
+    )
 
 
 def increment(password):
