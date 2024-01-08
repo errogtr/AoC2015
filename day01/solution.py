@@ -2,7 +2,7 @@ def counts(instructions):
     return instructions.count("(") - instructions.count(")")
 
 
-with open("day1/data") as f:
+with open("data") as f:
     instructions = f.read()
 
 # == PART 1 ==

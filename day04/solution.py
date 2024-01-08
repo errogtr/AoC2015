@@ -12,7 +12,7 @@ def lowest(key, l):
             return i
 
 
-with open("day4/data") as f:
+with open("data") as f:
     key = f.read()
 
 # ==== PART 1 ====

@@ -1,4 +1,4 @@
-with open("day2/data") as f:
+with open("data") as f:
     prisms = [[int(x) for x in l.split("x")] for l in f.read().splitlines()]
 
 
