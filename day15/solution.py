@@ -1,5 +1,12 @@
 import re
+from itertools import combinations
 from math import prod
+
+
+def spoons(N, size):
+    """k-partitions of N -> equivalent to stars and bars problem"""
+    for splits in combinations(range(N - size + 2), size - 1):
+        yield [b - a for a, b in zip((-1,) + splits, splits + (N-1,))]
 
 
 def f(X, I):
@@ -15,21 +22,14 @@ with open("data") as fp:
     ]
 
 T = 100
-spoons = [
-    (i, j, k, T - i - j - k)
-    for i in range(1, T - len(ingredients))
-    for j in range(1, T - i)
-    for k in range(1, T - i - j)
-]
-
 # ==== PART 1 ====
-print(max(f(X, ingredients) for X in spoons))
+print(max(f(X, ingredients) for X in spoons(100, len(ingredients))))
 
 # ==== PART 2 ====
 print(
     max(
         f(X, ingredients)
-        for X in spoons
+        for X in spoons(100, len(ingredients))
         if sum(s * i[-1] for s, i in zip(X, ingredients)) == 500
     )
 )
