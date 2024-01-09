@@ -21,15 +21,15 @@ with open("data") as fp:
         [int(x) for x in re.findall(r"-*\d+", l)] for l in fp.read().splitlines()
     ]
 
-T = 100
+S = 100
 # ==== PART 1 ====
-print(max(f(X, ingredients) for X in spoons(100, len(ingredients))))
+print(max(f(X, ingredients) for X in spoons(S, len(ingredients))))
 
 # ==== PART 2 ====
 print(
     max(
         f(X, ingredients)
-        for X in spoons(100, len(ingredients))
+        for X in spoons(S, len(ingredients))
         if sum(s * i[-1] for s, i in zip(X, ingredients)) == 500
     )
 )
