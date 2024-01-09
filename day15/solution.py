@@ -2,14 +2,10 @@ import re
 from math import prod
 
 
-def f(X, I, skip_cal=True):
-    C = skip_cal or sum(s * i[-1] for s, i in zip(X, I)) == 500
-    return (
-        prod(
-            max(0, sum(x * a for x, a in zip(X, alpha)))
-            for alpha in zip(*(i[:-1] for i in I))
-        )
-        * C
+def f(X, I):
+    return prod(
+        max(0, sum(x * a for x, a in zip(X, alpha)))
+        for alpha in zip(*(i[:-1] for i in I))
     )
 
 
@@ -26,8 +22,14 @@ spoons = [
     for k in range(1, T - i - j)
 ]
 
-# ==== PRINT 1 ====
+# ==== PART 1 ====
 print(max(f(X, ingredients) for X in spoons))
 
-# ==== PRINT 2 ====
-print(max(f(X, ingredients, skip_cal=False) for X in spoons))
+# ==== PART 2 ====
+print(
+    max(
+        f(X, ingredients)
+        for X in spoons
+        if sum(s * i[-1] for s, i in zip(X, ingredients)) == 500
+    )
+)
