@@ -9,7 +9,7 @@ def spoons(N, size):
         yield [b - a for a, b in zip((-1,) + splits, splits + (N-1,))]
 
 
-def f(X, I):
+def score(X, I):
     return prod(
         max(0, sum(x * a for x, a in zip(X, alpha)))
         for alpha in zip(*(i[:-1] for i in I))
@@ -23,12 +23,12 @@ with open("data") as fp:
 
 S = 100
 # ==== PART 1 ====
-print(max(f(X, ingredients) for X in spoons(S, len(ingredients))))
+print(max(score(X, ingredients) for X in spoons(S, len(ingredients))))
 
 # ==== PART 2 ====
 print(
     max(
-        f(X, ingredients)
+        score(X, ingredients)
         for X in spoons(S, len(ingredients))
         if sum(s * i[-1] for s, i in zip(X, ingredients)) == 500
     )
