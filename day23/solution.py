@@ -1,7 +1,7 @@
 def exec(registers):
     current = 0
     while True:
-        name, *args = instructions[current].split()
+        name, *args = instructions[current].replace(",", "").split()
         match name:
             case "hlf":
                 registers[args[0] == "b"] /= 2
@@ -12,10 +12,10 @@ def exec(registers):
             case "jmp":
                 current += int(args[0]) - 1
             case "jie":
-                if registers[args[0].strip(",") == "b"] % 2 == 0:
+                if registers[args[0] == "b"] % 2 == 0:
                     current += int(args[1]) - 1
             case "jio":
-                if registers[args[0].strip(",") == "b"] == 1:
+                if registers[args[0] == "b"] == 1:
                     current += int(args[1]) - 1
         current += 1
         if current == len(instructions):
