@@ -1,5 +1,5 @@
 import re
-from itertools import product, chain
+from itertools import product
 
 shop = """Weapons:    Cost  Damage  Armor
 Dagger        8     4       0
@@ -24,7 +24,7 @@ Defense +2   40     0       2
 Defense +3   80     0       3
 """
 
-weapons, armors, rings = list(), list(), list()
+weapons, armors, rings = list(), [(0, 0, 0)], [(0, 0, 0)]
 for table in shop.split("\n\n"):
     item_type = table.split()[0][:-1]
     for row in table.splitlines()[1:]:
@@ -37,14 +37,11 @@ for table in shop.split("\n\n"):
             case "Rings":
                 rings.append((cost, damage, armor))
 
-stats = list()
-for equipment in chain(weapons, product(weapons, armors), product(weapons, armors, rings), product(weapons, armors, rings, rings)):
-    if isinstance(equipment[0], tuple):
-        cost, damage, armor = map(sum, zip(*equipment))
-    else:
-        cost, damage, armor = equipment
-    stats.append((cost, damage, armor))
-
+stats = [
+    [sum(x) for x in zip(w, a, r_l, r_f)]
+    for w, a, r_l, r_f in product(weapons, armors, rings, rings)
+    if r_l != r_f
+]
 
 with open("data") as f:
     HP_b, D_b, A_b = map(int, re.findall(r"\d+", f.read()))
@@ -52,7 +49,19 @@ with open("data") as f:
 HP_p = 100
 
 # ==== PART 1 ====
-print(next(cost for cost, D_p, A_p in sorted(stats) if HP_p > HP_b // (D_p - A_b) * (D_b - A_p)))
+print(
+    next(
+        cost
+        for cost, D_p, A_p in sorted(stats)
+        if HP_p > HP_b // max(D_p - A_b, 1) * max(D_b - A_p, 1)
+    )
+)
 
 # ==== PART 2 ====
-print(next(cost for cost, D_p, A_p in reversed(sorted(stats)) if HP_p <= HP_b // (D_p - A_b) * (D_b - A_p)))
+print(
+    next(
+        cost
+        for cost, D_p, A_p in reversed(sorted(stats))
+        if HP_p <= HP_b // max(D_p - A_b, 1) * max(D_b - A_p, 1)
+    )
+)
