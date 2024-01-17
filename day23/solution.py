@@ -1,7 +1,7 @@
-def exec(registers):
+def exec(registers, instructions):
     current = 0
-    while True:
-        name, *args = instructions[current].replace(",", "").split()
+    while current != len(instructions):
+        name, *args = instructions[current].split()
         match name:
             case "hlf":
                 registers[args[0]] /= 2
@@ -18,15 +18,14 @@ def exec(registers):
                 if registers[args[0]] == 1:
                     current += int(args[1]) - 1
         current += 1
-        if current == len(instructions):
-            return registers["b"]
+    return registers["b"]
 
 
 with open("data") as f:
-    instructions = f.read().splitlines()
+    instructions = f.read().replace(",", "").splitlines()
 
 # ==== PART 1 ====
-print(exec({"a": 0, "b": 0}))
+print(exec({"a": 0, "b": 0}, instructions))
 
 # ==== PART 2 ====
-print(exec({"a": 1, "b": 0}))
+print(exec({"a": 1, "b": 0}, instructions))
