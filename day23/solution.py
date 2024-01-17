@@ -1,6 +1,6 @@
 def exec(registers, instructions):
     current = 0
-    while current != len(instructions):
+    while current < len(instructions):
         name, *args = instructions[current].split()
         match name:
             case "hlf":
