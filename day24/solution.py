@@ -3,13 +3,14 @@ from math import prod
 
 
 def entanglements(nums, groups):
-    entaglements = list()
     for k in range(1, len(nums)):
-        for comb in combinations(nums, k):
-            if sum(comb) == sum(nums - set(comb)) // (groups - 1):
-                entaglements.append(comb)
-        if entaglements:
-            return min(prod(e) for e in entaglements)
+        entanglements = [
+            c
+            for c in combinations(nums, k)
+            if sum(c) == sum(nums - set(c)) // (groups - 1)
+        ]
+        if entanglements:
+            return min(prod(e) for e in entanglements)
 
 
 with open("data") as f:
